@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tau Chapter Alumni · Phi Gamma Delta</title>
+  <meta name="description" content="News from the house, event photos, the Tau Tales newsletter and the alumni directory for brothers of the Phi Gamma Delta Tau Chapter at Hanover College.">
+  <meta name="theme-color" content="#2a1652">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%234a2788'/%3E%3Ctext x='32' y='41' font-family='Georgia,serif' font-size='22' fill='white' text-anchor='middle'%3E%CE%A6%CE%93%CE%94%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="preview-banner" id="preview-banner" hidden>
+    <strong>Preview mode:</strong> this page shows sample content, and sign-ups are not saved.
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="#home">
+        <span class="wordmark-letters" aria-hidden="true">ΦΓΔ</span>
+        <span class="wordmark-text">
+          <strong><span class="sr-only">Phi Gamma Delta, </span><span data-config="CHAPTER">Tau Chapter</span></strong>
+          <small data-config="SCHOOL">Hanover College</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="#home" data-route-link="home">Home</a>
+        <a href="#tau-tales" data-route-link="tau-tales">Tau Tales</a>
+        <a href="#join" data-route-link="join" class="nav-cta">Join</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ HOME ============ -->
+    <div data-view="home">
+      <section class="hero">
+        <div class="container hero-inner">
+          <p class="hero-eyebrow"><span data-config="FRATERNITY">Phi Gamma Delta</span> · <span data-config="SCHOOL">Hanover College</span></p>
+          <h1 class="hero-title" tabindex="-1"><span data-config="CHAPTER">Tau Chapter</span> Alumni</h1>
+          <p class="hero-lead">Welcome home, brothers. News from the house, photos from recent events, every issue of Tau Tales, and the alumni directory that keeps us connected.</p>
+          <div class="hero-actions">
+            <a class="btn btn-light btn-lg" href="#join">Join the Alumni Directory</a>
+            <a class="btn btn-outline-light btn-lg" href="#tau-tales">Read Tau Tales</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="container home-grid">
+        <section class="home-updates" aria-labelledby="updates-heading">
+          <div class="section-head">
+            <p class="eyebrow">Chapter &amp; house news</p>
+            <h2 id="updates-heading">From the House</h2>
+          </div>
+          <div id="updates-list" class="updates-list"><p class="loading">Loading updates…</p></div>
+          <button type="button" class="btn btn-secondary" id="updates-more" hidden>Show older updates</button>
+        </section>
+
+        <aside class="home-aside">
+          <section class="teaser-card" aria-labelledby="teaser-heading">
+            <p class="eyebrow">The newsletter</p>
+            <h2 id="teaser-heading">Latest Tau Tales</h2>
+            <div id="teaser-body"><p class="loading">Loading…</p></div>
+          </section>
+          <section class="join-card" aria-labelledby="join-card-heading">
+            <h2 id="join-card-heading">Are you in the directory?</h2>
+            <p>Add your info so the chapter can invite you to alumni dinners and events, and so brothers can help each other with jobs and networking.</p>
+            <a class="btn btn-primary" href="#join">Join the Directory</a>
+          </section>
+        </aside>
+      </div>
+
+      <section class="events-section" aria-labelledby="events-heading">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Photos</p>
+            <h2 id="events-heading">Recent Events</h2>
+          </div>
+          <div id="events-list"><p class="loading">Loading photos…</p></div>
+          <button type="button" class="btn btn-secondary" id="events-more" hidden>Show more events</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ TAU TALES ============ -->
+    <div data-view="tau-tales" hidden>
+      <section class="page-head">
+        <div class="container">
+          <p class="eyebrow">The Tau Chapter newsletter</p>
+          <h1 tabindex="-1">Tau Tales</h1>
+          <p class="lead">Published every other month. Every issue in one place, newest first.</p>
+        </div>
+      </section>
+      <div class="container page-body">
+        <div id="issues-archive"><p class="loading">Loading issues…</p></div>
+      </div>
+    </div>
+
+    <!-- ============ JOIN ============ -->
+    <div data-view="join" hidden>
+      <section class="page-head">
+        <div class="container">
+          <p class="eyebrow">Alumni directory</p>
+          <h1 tabindex="-1">Join the Directory</h1>
+          <p class="lead">It takes about a minute. Already joined? Submit again with the same email address to update your info.</p>
+        </div>
+      </section>
+
+      <div class="container page-body join-layout">
+        <aside class="join-aside">
+          <h2>Why join?</h2>
+          <ul class="check-list">
+            <li>Invitations to alumni dinners, Homecoming and chapter events</li>
+            <li>News from the house and new issues of Tau Tales</li>
+            <li>Job opportunities and networking with brothers across the country</li>
+          </ul>
+          <div class="privacy-note">
+            <h3>Your privacy</h3>
+            <p>Your information is only visible to the chapter officers who manage the alumni directory. It is never shown on this website or shared outside the chapter.</p>
+          </div>
+        </aside>
+
+        <div class="form-card">
+          <form id="join-form" novalidate>
+            <p class="form-intro"><span class="req" aria-hidden="true">*</span> Required</p>
+            <div class="form-grid">
+              <div class="field span-2">
+                <label for="f-name">Full name <span class="req" aria-hidden="true">*</span></label>
+                <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="f-name-err">
+                <p class="field-error" id="f-name-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-gradYear">Graduation year <span class="req" aria-hidden="true">*</span></label>
+                <input id="f-gradYear" name="gradYear" type="text" inputmode="numeric" maxlength="4" placeholder="e.g. 2015" autocomplete="off" required aria-describedby="f-gradYear-err">
+                <p class="field-error" id="f-gradYear-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-location">Where you live now <span class="req" aria-hidden="true">*</span></label>
+                <input id="f-location" name="location" type="text" maxlength="120" placeholder="City, State" required aria-describedby="f-location-hint f-location-err">
+                <p class="hint" id="f-location-hint">For example: Indianapolis, IN</p>
+                <p class="field-error" id="f-location-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-employer">Employer <span class="optional">(optional)</span></label>
+                <input id="f-employer" name="employer" type="text" autocomplete="organization" maxlength="120">
+              </div>
+              <div class="field">
+                <label for="f-position">Position <span class="optional">(optional)</span></label>
+                <input id="f-position" name="position" type="text" autocomplete="organization-title" maxlength="120">
+              </div>
+              <div class="field">
+                <label for="f-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required aria-describedby="f-phone-err">
+                <p class="field-error" id="f-phone-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="f-email-err">
+                <p class="field-error" id="f-email-err" hidden></p>
+              </div>
+              <div class="field span-2">
+                <label class="check">
+                  <input type="checkbox" name="networking" id="f-networking">
+                  <span>I'm open to helping brothers with job opportunities and networking</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Honeypot: hidden from people, filled in by spam bots. -->
+            <div class="hp" aria-hidden="true">
+              <label for="f-website">Website</label>
+              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary btn-lg" type="submit">Join the Directory</button>
+            </div>
+            <p class="form-status" id="join-status" role="status"></p>
+          </form>
+
+          <div id="join-success" class="success-panel" hidden tabindex="-1">
+            <div class="success-icon" aria-hidden="true">✓</div>
+            <h2 id="join-success-title">You're in the directory.</h2>
+            <p id="join-success-text"></p>
+            <p class="notice notice-warn" id="join-success-preview" hidden>Preview mode: this sign-up was not saved.</p>
+            <div class="form-actions">
+              <a class="btn btn-primary" href="#home">Back to home</a>
+              <button class="btn btn-secondary" id="join-again" type="button">Edit my info</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-mark" aria-hidden="true">ΦΓΔ</p>
+        <p><span data-config="FRATERNITY">Phi Gamma Delta</span> · <span data-config="CHAPTER">Tau Chapter</span><br><span data-config="SCHOOL">Hanover College</span></p>
+      </div>
+      <p class="footer-contact" id="footer-contact" hidden>Questions? Email <a href="#"></a></p>
+      <p class="footer-admin"><a href="admin.html">Admin</a></p>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" class="lightbox" aria-label="Photo viewer">
+    <div class="lightbox-inner">
+      <button type="button" class="lightbox-close" aria-label="Close photo viewer">×</button>
+      <figure class="lightbox-figure">
+        <img id="lightbox-img" alt="">
+        <figcaption>
+          <span id="lightbox-caption"></span>
+          <span class="lightbox-count" id="lightbox-count"></span>
+        </figcaption>
+      </figure>
+      <button type="button" class="lightbox-nav lightbox-prev" aria-label="Previous photo">‹</button>
+      <button type="button" class="lightbox-nav lightbox-next" aria-label="Next photo">›</button>
+    </div>
+  </dialog>
+
+  <script src="config.js"></script>
+  <script src="common.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    const PREVIEW = FG.PREVIEW;
+    const esc = FG.escapeHtml;
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const badge = PREVIEW ? '<span class="badge-sample">Sample</span>' : "";
+
+    FG.applyConfig();
+
+    /* ---------- Routing (#home, #tau-tales, #join) ---------- */
+
+    const ROUTES = { home: "", "tau-tales": "Tau Tales", join: "Join the Directory" };
+    const SITE_TITLE = document.title;
+    let firstRoute = true;
+
+    function showRoute() {
+      const hash = location.hash.slice(1);
+      const route = hash in ROUTES ? hash : firstRoute ? "home" : null;
+      if (!route) return; // other anchors, like the skip link
+      document.querySelectorAll("[data-view]").forEach((v) => { v.hidden = v.dataset.view !== route; });
+      document.querySelectorAll("[data-route-link]").forEach((a) => {
+        if (a.dataset.routeLink === route) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      document.title = ROUTES[route] ? `${ROUTES[route]} · ${SITE_TITLE}` : SITE_TITLE;
+      if (!firstRoute) {
+        window.scrollTo(0, 0);
+        const heading = $(`[data-view="${route}"] h1`);
+        if (heading) heading.focus({ preventScroll: true });
+      }
+      firstRoute = false;
+    }
+    window.addEventListener("hashchange", showRoute);
+    showRoute();
+
+    /* ---------- Content ---------- */
+
+    FG.getPublicContent()
+      .then((data) => {
+        renderUpdates(FG.sortNewest(data.updates));
+        renderEvents(FG.sortNewest(data.photos));
+        renderTeaser(FG.sortNewest(data.newsletters));
+        renderArchive(FG.sortNewest(data.newsletters));
+      })
+      .catch((err) => {
+        console.error(err);
+        const msg = '<p class="empty-state">We couldn\'t load this right now. Please try again later.</p>';
+        ["#updates-list", "#events-list", "#teaser-body", "#issues-archive"].forEach((sel) => { $(sel).innerHTML = msg; });
+      });
+
+    function pager(list, pageSize, container, moreButton, renderItem) {
+      let shown = 0;
+      container.innerHTML = "";
+      function next() {
+        container.insertAdjacentHTML("beforeend", list.slice(shown, shown + pageSize).map((item, i) => renderItem(item, shown + i)).join(""));
+        shown += pageSize;
+        moreButton.hidden = shown >= list.length;
+      }
+      moreButton.onclick = next;
+      next();
+    }
+
+    function renderUpdates(updates) {
+      const el = $("#updates-list");
+      if (!updates.length) {
+        el.innerHTML = '<p class="empty-state">No updates yet. Check back soon.</p>';
+        return;
+      }
+      pager(updates, 5, el, $("#updates-more"), (u) => {
+        const img = FG.imageUrl(u.imageUrl, 1000);
+        return `<article class="update-card${img ? " has-image" : ""}">
+          ${img ? `<div class="update-media"><img src="${esc(img)}" alt="Photo: ${esc(u.title)}" loading="lazy"></div>` : ""}
+          <div class="update-body">
+            <p class="meta"><time datetime="${esc(u.date)}">${esc(FG.formatDate(u.date))}</time>${badge}</p>
+            <h3>${esc(u.title)}</h3>
+            <p class="prose">${esc(u.body)}</p>
+          </div>
+        </article>`;
+      });
+    }
+
+    /* Recent events: photos grouped by event name, newest event first. */
+    let eventGroups = [];
+
+    function renderEvents(photos) {
+      const el = $("#events-list");
+      const groups = new Map();
+      photos.forEach((p) => {
+        const key = String(p.event || "Event").trim().toLowerCase();
+        if (!groups.has(key)) groups.set(key, { event: p.event || "Event", date: p.date, photos: [] });
+        groups.get(key).photos.push(p);
+      });
+      // Show photos within an event in the order they were added.
+      eventGroups = [...groups.values()].map((g) => ({ ...g, photos: g.photos.reverse() }));
+      if (!eventGroups.length) {
+        el.innerHTML = '<p class="empty-state">No event photos yet.</p>';
+        return;
+      }
+      pager(eventGroups, 3, el, $("#events-more"), (g, gi) => {
+        const n = g.photos.length;
+        return `<section class="event-group" aria-labelledby="event-${gi}">
+          <div class="event-head">
+            <h3 id="event-${gi}">${esc(g.event)}</h3>
+            <p class="meta"><time datetime="${esc(g.date)}">${esc(FG.formatDate(g.date))}</time> · ${n} photo${n === 1 ? "" : "s"}${badge}</p>
+          </div>
+          <div class="photo-grid">
+            ${g.photos.map((p, pi) => `<button type="button" class="photo-thumb" data-group="${gi}" data-index="${pi}"
+                aria-label="View photo ${pi + 1} of ${n} from ${esc(g.event)}${p.caption ? ": " + esc(p.caption) : ""}">
+                <img src="${esc(FG.imageUrl(p.imageUrl, 600))}" alt="" loading="lazy">
+              </button>`).join("")}
+          </div>
+        </section>`;
+      });
+    }
+
+    $("#events-list").addEventListener("click", (e) => {
+      const thumb = e.target.closest(".photo-thumb");
+      if (thumb) openLightbox(+thumb.dataset.group, +thumb.dataset.index);
+    });
+
+    /* ---------- Lightbox ---------- */
+
+    const lightbox = $("#lightbox");
+    const lbImg = $("#lightbox-img");
+    let lbGroup = null;
+    let lbIndex = 0;
+
+    function openLightbox(groupIndex, photoIndex) {
+      lbGroup = eventGroups[groupIndex];
+      lbIndex = photoIndex;
+      showPhoto();
+      lightbox.showModal();
+    }
+
+    function showPhoto() {
+      const p = lbGroup.photos[lbIndex];
+      const n = lbGroup.photos.length;
+      lbImg.src = FG.imageUrl(p.imageUrl, 1600);
+      lbImg.alt = p.caption || `Photo from ${lbGroup.event}`;
+      $("#lightbox-caption").textContent = p.caption ? `${p.caption} · ${lbGroup.event}` : lbGroup.event;
+      $("#lightbox-count").textContent = n > 1 ? `${lbIndex + 1} of ${n}` : "";
+      lightbox.querySelectorAll(".lightbox-nav").forEach((b) => { b.hidden = n < 2; });
+    }
+
+    function step(delta) {
+      const n = lbGroup.photos.length;
+      if (n < 2) return;
+      lbIndex = (lbIndex + delta + n) % n;
+      showPhoto();
+    }
+
+    $(".lightbox-prev").addEventListener("click", () => step(-1));
+    $(".lightbox-next").addEventListener("click", () => step(1));
+    $(".lightbox-close").addEventListener("click", () => lightbox.close());
+    lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "ArrowRight") step(1);
+    });
+    lightbox.addEventListener("close", () => lbImg.removeAttribute("src"));
+    let touchX = null;
+    lightbox.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    lightbox.addEventListener("touchend", (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+      touchX = null;
+    });
+
+    /* ---------- Tau Tales ---------- */
+
+    function coverHtml(n, small) {
+      const cls = "issue-cover" + (small ? " issue-cover--small" : "");
+      const cover = FG.imageUrl(n.coverUrl, small ? 400 : 700);
+      if (cover) return `<div class="${cls}"><img src="${esc(cover)}" alt="" loading="lazy"></div>`;
+      // No cover image: draw a typographic cover.
+      const m = String(n.issue || "").match(/^(.*?)[,\s]*(\d{4})\s*$/);
+      const title = m ? m[1] : n.issue;
+      const year = m ? m[2] : String(n.date || "").slice(0, 4);
+      return `<div class="${cls} issue-cover--type" aria-hidden="true">
+        <span class="cover-letters">ΦΓΔ</span>
+        <span class="cover-name">Tau Tales</span>
+        <span class="cover-rule"></span>
+        <span class="cover-issue">${esc(title)}</span>
+        <span class="cover-year">${esc(year)}</span>
+      </div>`;
+    }
+
+    function readButton(n) {
+      const url = FG.documentUrl(n.pdfUrl);
+      if (!url) return `<span class="btn btn-primary btn-small is-disabled" aria-disabled="true">${PREVIEW ? "Sample issue (no PDF)" : "PDF coming soon"}</span>`;
+      return `<a class="btn btn-primary btn-small" href="${esc(url)}" target="_blank" rel="noopener">Read issue<span class="sr-only">: ${esc(n.issue)} (opens PDF in a new tab)</span></a>`;
+    }
+
+    function renderTeaser(newsletters) {
+      const el = $("#teaser-body");
+      const latest = newsletters[0];
+      if (!latest) {
+        el.innerHTML = '<p class="empty-state">The first issue is coming soon.</p>';
+        return;
+      }
+      el.innerHTML = `<div class="teaser-issue">
+          ${coverHtml(latest, true)}
+          <div class="teaser-info">
+            <h3>${esc(latest.issue)}</h3>
+            <p class="meta">${esc(FG.formatDate(latest.date))}${badge}</p>
+            ${latest.summary ? `<p class="teaser-summary">${esc(latest.summary)}</p>` : ""}
+            ${readButton(latest)}
+          </div>
+        </div>
+        <p class="teaser-more"><a href="#tau-tales">Browse every issue →</a></p>`;
+    }
+
+    function renderArchive(newsletters) {
+      const el = $("#issues-archive");
+      if (!newsletters.length) {
+        el.innerHTML = '<p class="empty-state">No issues have been posted yet.</p>';
+        return;
+      }
+      const byYear = new Map();
+      newsletters.forEach((n) => {
+        const year = String(n.date || "").slice(0, 4) || "Undated";
+        if (!byYear.has(year)) byYear.set(year, []);
+        byYear.get(year).push(n);
+      });
+      el.innerHTML = [...byYear].map(([year, items]) => `
+        <section class="year-group" aria-labelledby="year-${esc(year)}">
+          <h2 class="year-heading" id="year-${esc(year)}">${esc(year)}</h2>
+          <div class="issue-grid">${items.map(issueCard).join("")}</div>
+        </section>`).join("");
+    }
+
+    function issueCard(n) {
+      const url = FG.documentUrl(n.pdfUrl);
+      const cover = coverHtml(n, false);
+      return `<article class="issue-card">
+        ${url ? `<a class="issue-cover-link" href="${esc(url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${cover}</a>` : cover}
+        <div class="issue-info">
+          <p class="meta">${esc(FG.formatDate(n.date))}${badge}</p>
+          <h3>${esc(n.issue)}</h3>
+          ${n.summary ? `<p class="issue-summary">${esc(n.summary)}</p>` : ""}
+          ${readButton(n)}
+        </div>
+      </article>`;
+    }
+
+    /* ---------- Join form ---------- */
+
+    const form = $("#join-form");
+    const status = $("#join-status");
+    const success = $("#join-success");
+
+    function validate(d) {
+      const errors = {};
+      const maxYear = new Date().getFullYear() + 6;
+      const year = Number(d.gradYear);
+      const phoneDigits = d.phone.replace(/\D/g, "");
+      if (d.name.length < 2) errors.name = "Please enter your full name.";
+      if (!/^\d{4}$/.test(d.gradYear) || year < 1900 || year > maxYear) errors.gradYear = "Enter a 4-digit year, like 2015.";
+      if (!d.location) errors.location = "Please enter your city and state.";
+      if (phoneDigits.length < 10 || phoneDigits.length > 15) errors.phone = "Enter your phone number with area code (at least 10 digits).";
+      if (!FG.EMAIL_RE.test(d.email)) errors.email = "Enter a valid email address, like name@example.com.";
+      return errors;
+    }
+
+    function showErrors(errors) {
+      ["name", "gradYear", "location", "phone", "email"].forEach((field) => {
+        const input = $(`#f-${field}`);
+        const msg = $(`#f-${field}-err`);
+        if (errors[field]) {
+          input.setAttribute("aria-invalid", "true");
+          msg.textContent = errors[field];
+          msg.hidden = false;
+        } else {
+          input.removeAttribute("aria-invalid");
+          msg.hidden = true;
+        }
+      });
+    }
+
+    function readForm() {
+      const fd = new FormData(form);
+      const get = (k) => String(fd.get(k) || "").trim();
+      return {
+        name: get("name").replace(/\s+/g, " "),
+        gradYear: get("gradYear"),
+        location: get("location"),
+        employer: get("employer"),
+        position: get("position"),
+        phone: get("phone"),
+        email: get("email"),
+        networking: $("#f-networking").checked,
+        website: get("website"),
+      };
+    }
+
+    // Re-check a field once the person fixes it.
+    form.addEventListener("input", (e) => {
+      const field = e.target.name;
+      if (e.target.getAttribute("aria-invalid") !== "true" || validate(readForm())[field]) return;
+      e.target.removeAttribute("aria-invalid");
+      $(`#f-${field}-err`).hidden = true;
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = readForm();
+      const errors = validate(data);
+      showErrors(errors);
+      const firstInvalid = Object.keys(errors)[0];
+      if (firstInvalid) {
+        FG.setStatus(status, "Please fix the highlighted fields.", "error");
+        $(`#f-${firstInvalid}`).focus();
+        return;
+      }
+
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      button.textContent = "Submitting…";
+      FG.setStatus(status, "", "info");
+      try {
+        let updated = false;
+        if (!PREVIEW) updated = !!(await FG.post({ action: "signup", data })).updated;
+        showSuccess(data.name.split(" ")[0], updated);
+      } catch (err) {
+        FG.setStatus(status, err.message, "error");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Join the Directory";
+      }
+    });
+
+    function showSuccess(firstName, updated) {
+      $("#join-success-title").textContent = updated ? "Your info is updated." : "You're in the directory.";
+      $("#join-success-text").textContent = updated
+        ? `Thanks, ${firstName}. We found your existing entry and updated it with your new info.`
+        : `Thanks, ${firstName}. The chapter can now reach you about alumni events, new issues of Tau Tales and opportunities from brothers.`;
+      $("#join-success-preview").hidden = !PREVIEW;
+      form.hidden = true;
+      success.hidden = false;
+      success.focus();
+    }
+
+    $("#join-again").addEventListener("click", () => {
+      success.hidden = true;
+      form.hidden = false;
+      $("#f-name").focus();
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · Tau Chapter Alumni</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2a1652">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%234a2788'/%3E%3Ctext x='32' y='41' font-family='Georgia,serif' font-size='22' fill='white' text-anchor='middle'%3E%CE%A6%CE%93%CE%94%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="preview-banner" id="preview-banner" hidden>
+    <strong>Preview mode:</strong> sample data only. Any key unlocks the dashboard, and nothing is saved, uploaded or emailed.
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="index.html">
+        <span class="wordmark-letters" aria-hidden="true">ΦΓΔ</span>
+        <span class="wordmark-text">
+          <strong><span class="sr-only">Phi Gamma Delta, </span><span data-config="CHAPTER">Tau Chapter</span></strong>
+          <small>Admin</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <a class="header-link" href="index.html">View site</a>
+        <button type="button" class="btn btn-small btn-outline-light" id="sign-out" hidden>Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ LOGIN ============ -->
+    <section id="login-view" class="container login-wrap" aria-labelledby="login-heading">
+      <div class="login-card">
+        <h1 id="login-heading">Chapter Admin</h1>
+        <p>Enter the admin key to manage the alumni directory, email brothers and post content.</p>
+        <form id="login-form">
+          <div class="field">
+            <label for="admin-key">Admin key</label>
+            <input id="admin-key" type="password" autocomplete="current-password" spellcheck="false" autocapitalize="off" required>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Unlock dashboard</button>
+          <p class="form-status" id="login-status" role="status"></p>
+        </form>
+        <p class="small muted">The key is kept only in this browser tab and is forgotten when you close it. Lost the key? See “Change the admin key” in SETUP.md.</p>
+      </div>
+    </section>
+
+    <!-- ============ DASHBOARD ============ -->
+    <section id="dashboard" class="container dashboard" hidden aria-labelledby="dash-heading">
+      <h1 id="dash-heading" class="dash-heading" tabindex="-1">Chapter Admin</h1>
+
+      <div class="tabs" role="tablist" aria-label="Dashboard sections">
+        <button type="button" class="tab" role="tab" id="tab-directory" aria-controls="panel-directory" aria-selected="true">Alumni Directory</button>
+        <button type="button" class="tab" role="tab" id="tab-email" aria-controls="panel-email" aria-selected="false" tabindex="-1">Email Brothers</button>
+        <button type="button" class="tab" role="tab" id="tab-content" aria-controls="panel-content" aria-selected="false" tabindex="-1">Post Content</button>
+      </div>
+
+      <!-- ---------- Directory ---------- -->
+      <div class="tab-panel" role="tabpanel" id="panel-directory" aria-labelledby="tab-directory">
+        <div class="stat-grid">
+          <div class="stat"><p class="stat-label">Total alumni</p><p class="stat-value" id="stat-total">–</p><p class="stat-sub">in the directory</p></div>
+          <div class="stat"><p class="stat-label">Open to networking</p><p class="stat-value" id="stat-net">–</p><p class="stat-sub" id="stat-net-sub"></p></div>
+          <div class="stat"><p class="stat-label">Grad years represented</p><p class="stat-value" id="stat-years">–</p><p class="stat-sub" id="stat-years-sub"></p></div>
+          <div class="stat"><p class="stat-label">Newest sign-up</p><p class="stat-value stat-value--text" id="stat-newest">–</p><p class="stat-sub" id="stat-newest-sub"></p></div>
+        </div>
+
+        <div class="panel-card">
+          <div class="toolbar" role="search" aria-label="Filter the directory">
+            <div class="field field-search">
+              <label for="dir-search">Search</label>
+              <input id="dir-search" type="search" placeholder="Name, employer, location or email">
+            </div>
+            <div class="field field-year">
+              <label for="dir-from">Class from</label>
+              <input id="dir-from" type="number" inputmode="numeric" min="1900" max="2100" placeholder="1970">
+            </div>
+            <div class="field field-year">
+              <label for="dir-to">Class to</label>
+              <input id="dir-to" type="number" inputmode="numeric" min="1900" max="2100" placeholder="2026">
+            </div>
+            <label class="check check-inline"><input type="checkbox" id="dir-net"> <span>Networking only</span></label>
+            <button type="button" class="btn btn-ghost btn-small" id="dir-clear">Clear filters</button>
+          </div>
+
+          <div class="results-bar">
+            <p id="dir-count" class="results-count" aria-live="polite"></p>
+            <div class="field mobile-sort">
+              <label for="dir-sort">Sort by</label>
+              <select id="dir-sort">
+                <option value="submitted:desc">Newest sign-ups</option>
+                <option value="name:asc">Name (A–Z)</option>
+                <option value="gradYear:asc">Class (oldest first)</option>
+                <option value="gradYear:desc">Class (newest first)</option>
+                <option value="location:asc">Location</option>
+                <option value="employer:asc">Employer</option>
+              </select>
+            </div>
+            <div class="results-actions">
+              <button type="button" class="btn btn-secondary btn-small" id="dir-export">Export CSV</button>
+              <button type="button" class="btn btn-secondary btn-small" id="dir-copy">Copy emails</button>
+              <button type="button" class="btn btn-ghost btn-small" id="dir-refresh">Refresh</button>
+            </div>
+          </div>
+          <p class="form-status" id="dir-status" role="status"></p>
+
+          <div class="table-wrap">
+            <table class="data-table" id="dir-table">
+              <caption class="sr-only">Alumni directory. Column headers with buttons can be sorted.</caption>
+              <thead>
+                <tr>
+                  <th scope="col" data-sort="name" aria-sort="none"><button type="button">Name</button></th>
+                  <th scope="col" data-sort="gradYear" aria-sort="none"><button type="button">Class</button></th>
+                  <th scope="col" data-sort="location" aria-sort="none"><button type="button">Location</button></th>
+                  <th scope="col" data-sort="employer" aria-sort="none"><button type="button">Work</button></th>
+                  <th scope="col">Phone</th>
+                  <th scope="col" data-sort="email" aria-sort="none"><button type="button">Email</button></th>
+                  <th scope="col" data-sort="networking" aria-sort="none"><button type="button">Networking</button></th>
+                  <th scope="col" data-sort="submitted" aria-sort="none"><button type="button">Joined</button></th>
+                  <th scope="col"><span class="sr-only">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="dir-body"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="dir-empty" hidden></p>
+        </div>
+      </div>
+
+      <!-- ---------- Email ---------- -->
+      <div class="tab-panel" role="tabpanel" id="panel-email" aria-labelledby="tab-email" hidden>
+        <div class="email-layout">
+          <form id="email-form" class="panel-card" novalidate>
+            <fieldset class="fieldset">
+              <legend>Recipients</legend>
+              <label class="radio"><input type="radio" name="rcpt" value="all" checked> <span>All alumni</span></label>
+              <label class="radio"><input type="radio" name="rcpt" value="networking"> <span>Open to networking only</span></label>
+              <label class="radio"><input type="radio" name="rcpt" value="range"> <span>Grad year range</span></label>
+              <div class="range-inputs" id="rcpt-range" hidden>
+                <div class="field field-year">
+                  <label for="rcpt-from">Class from</label>
+                  <input id="rcpt-from" type="number" inputmode="numeric" min="1900" max="2100">
+                </div>
+                <div class="field field-year">
+                  <label for="rcpt-to">Class to</label>
+                  <input id="rcpt-to" type="number" inputmode="numeric" min="1900" max="2100">
+                </div>
+              </div>
+              <label class="radio"><input type="radio" name="rcpt" value="filter"> <span>Current directory filter <span class="muted" id="rcpt-filter-desc"></span></span></label>
+            </fieldset>
+
+            <div class="recipient-summary" aria-live="polite">
+              <p class="recipient-count"><strong id="rcpt-count">0</strong> <span id="rcpt-noun">recipients</span></p>
+              <p class="small muted" id="quota-line"></p>
+            </div>
+            <div class="notice notice-warn" id="quota-warning" hidden></div>
+
+            <div class="field">
+              <label for="email-subject">Subject</label>
+              <input id="email-subject" type="text" maxlength="200" required>
+            </div>
+            <div class="field">
+              <label for="email-body">Message</label>
+              <textarea id="email-body" rows="10" required aria-describedby="email-body-hint"></textarea>
+              <p class="hint" id="email-body-hint">Plain text. Links become clickable. A short footer saying why they got this email is added automatically.</p>
+            </div>
+            <div class="field">
+              <label for="email-reply">Reply-to <span class="optional">(optional)</span></label>
+              <input id="email-reply" type="email" autocomplete="email" aria-describedby="email-reply-hint">
+              <p class="hint" id="email-reply-hint">Replies go to this address instead of the chapter account.</p>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="email-send">Send email</button>
+              <button type="button" class="btn btn-secondary" id="email-copy">Copy addresses</button>
+            </div>
+            <p class="form-status" id="email-status" role="status"></p>
+          </form>
+
+          <aside class="panel-card email-help">
+            <h2>How sending works</h2>
+            <ul>
+              <li>Email goes out from the chapter Google account in batches of 50, with everyone in <strong>BCC</strong>, so no one sees anyone else's address.</li>
+              <li>Each batch is also addressed to the chapter account, so you get a copy of what was sent.</li>
+              <li>Only addresses in the alumni directory can receive email.</li>
+              <li>Free Gmail accounts can email about <strong>100 recipients a day</strong>. For bigger sends, use <strong>Copy addresses</strong> and paste them into BCC in your own email.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+
+      <!-- ---------- Content ---------- -->
+      <div class="tab-panel" role="tabpanel" id="panel-content" aria-labelledby="tab-content" hidden>
+        <div class="post-grid">
+          <section class="panel-card" aria-labelledby="post-update-h">
+            <h2 id="post-update-h">House update</h2>
+            <p class="small muted">Shows under “From the House” on the home page.</p>
+            <form id="form-update" novalidate>
+              <div class="field"><label for="u-title">Title</label><input id="u-title" name="title" type="text" maxlength="200" required></div>
+              <div class="field"><label for="u-date">Date</label><input id="u-date" name="date" type="date" required></div>
+              <div class="field"><label for="u-body">Update</label><textarea id="u-body" name="body" rows="6" required></textarea></div>
+              <div class="field">
+                <label for="u-photo">Photo <span class="optional">(optional)</span></label>
+                <input id="u-photo" name="photo" type="file" accept="image/*">
+              </div>
+              <div class="form-actions"><button type="submit" class="btn btn-primary">Post update</button></div>
+              <p class="form-status" role="status"></p>
+            </form>
+            <h3 class="list-heading">Posted updates <span class="count" id="count-updates"></span></h3>
+            <ul class="item-list" id="list-updates"></ul>
+          </section>
+
+          <section class="panel-card" aria-labelledby="post-photos-h">
+            <h2 id="post-photos-h">Event photos</h2>
+            <p class="small muted">Shows under “Recent Events”, grouped by event name. Use the same event name to add more photos to an event.</p>
+            <form id="form-photos" novalidate>
+              <div class="field"><label for="p-event">Event name</label><input id="p-event" name="event" type="text" maxlength="200" list="event-names" placeholder="e.g. Homecoming 2026" required><datalist id="event-names"></datalist></div>
+              <div class="field"><label for="p-date">Date</label><input id="p-date" name="date" type="date" required></div>
+              <div class="field"><label for="p-caption">Caption <span class="optional">(optional, applies to every photo)</span></label><input id="p-caption" name="caption" type="text" maxlength="300"></div>
+              <div class="field">
+                <label for="p-files">Photos</label>
+                <input id="p-files" name="files" type="file" accept="image/*" multiple required aria-describedby="p-files-hint">
+                <p class="hint" id="p-files-hint">Select one or more. Photos are resized to 1600px before upload.</p>
+              </div>
+              <div class="form-actions"><button type="submit" class="btn btn-primary">Upload photos</button></div>
+              <p class="form-status" role="status"></p>
+            </form>
+            <h3 class="list-heading">Posted photos <span class="count" id="count-photos"></span></h3>
+            <ul class="item-list" id="list-photos"></ul>
+          </section>
+
+          <section class="panel-card" aria-labelledby="post-issue-h">
+            <h2 id="post-issue-h">Tau Tales issue</h2>
+            <p class="small muted">Shows on the Tau Tales page and as the latest issue on the home page.</p>
+            <form id="form-issue" novalidate>
+              <div class="field"><label for="n-issue">Issue name</label><input id="n-issue" name="issue" type="text" maxlength="120" placeholder="e.g. September / October 2026" required></div>
+              <div class="field"><label for="n-date">Date</label><input id="n-date" name="date" type="date" required></div>
+              <div class="field"><label for="n-summary">Summary <span class="optional">(optional)</span></label><textarea id="n-summary" name="summary" rows="3"></textarea></div>
+              <div class="field">
+                <label for="n-pdf">PDF</label>
+                <input id="n-pdf" name="pdf" type="file" accept="application/pdf,.pdf" required aria-describedby="n-pdf-hint">
+                <p class="hint" id="n-pdf-hint">Up to 20 MB.</p>
+              </div>
+              <div class="field">
+                <label for="n-cover">Cover image <span class="optional">(optional)</span></label>
+                <input id="n-cover" name="cover" type="file" accept="image/*" aria-describedby="n-cover-hint">
+                <p class="hint" id="n-cover-hint">Without one, the site draws a simple Tau Tales cover.</p>
+              </div>
+              <div class="form-actions"><button type="submit" class="btn btn-primary">Post issue</button></div>
+              <p class="form-status" role="status"></p>
+            </form>
+            <h3 class="list-heading">Posted issues <span class="count" id="count-newsletters"></span></h3>
+            <ul class="item-list" id="list-newsletters"></ul>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="common.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    const PREVIEW = FG.PREVIEW;
+    const esc = FG.escapeHtml;
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const KEY_STORE = "tauAdminKey";
+    const BATCH_SIZE = 50;
+    const MAX_PDF_BYTES = 20 * 1024 * 1024;
+
+    const state = {
+      key: "",
+      alumni: [],
+      content: { updates: [], photos: [], newsletters: [] },
+      quota: null,
+      sort: { key: "submitted", dir: "desc" },
+    };
+
+    FG.applyConfig();
+
+    /* ---------- Backend calls ---------- */
+
+    // Preview mode: an in-memory stand-in for the Apps Script API.
+    const previewDb = PREVIEW
+      ? { alumni: FG.clone(FG.PREVIEW_ALUMNI), content: FG.clone(FG.PREVIEW_CONTENT), quota: 100 }
+      : null;
+    const LIST_FOR_TYPE = { update: "updates", photo: "photos", newsletter: "newsletters" };
+
+    async function previewAdmin(op, payload) {
+      await new Promise((r) => setTimeout(r, 200));
+      const fail = (message, data) => { const err = new Error(message); err.data = data || {}; throw err; };
+      switch (op) {
+        case "ping": return { ok: true, quota: previewDb.quota };
+        case "alumni": return { ok: true, alumni: FG.clone(previewDb.alumni) };
+        case "content": return { ok: true, ...FG.clone(previewDb.content) };
+        case "add": {
+          const item = { id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ...payload.data };
+          previewDb.content[LIST_FOR_TYPE[payload.type]].unshift(item);
+          return { ok: true, item };
+        }
+        case "delete": {
+          if (payload.type === "alumni") previewDb.alumni = previewDb.alumni.filter((a) => a.id !== payload.id);
+          else {
+            const key = LIST_FOR_TYPE[payload.type];
+            previewDb.content[key] = previewDb.content[key].filter((i) => i.id !== payload.id);
+          }
+          return { ok: true };
+        }
+        case "upload":
+          // Keep images visible in preview with a data URL; PDFs get no link.
+          return { ok: true, url: payload.mimeType.startsWith("image/") ? `data:${payload.mimeType};base64,${payload.data}` : "" };
+        case "email": {
+          const n = payload.recipients.length;
+          const needed = n + Math.ceil(n / BATCH_SIZE);
+          if (needed > previewDb.quota) fail(`This send needs ${needed} of today's email quota, but only ${previewDb.quota} remain.`, { code: "quota", quota: previewDb.quota });
+          previewDb.quota -= needed;
+          return { ok: true, sent: n, batches: Math.ceil(n / BATCH_SIZE), quota: previewDb.quota, preview: true };
+        }
+      }
+      return fail("Unknown admin operation.");
+    }
+
+    async function adminCall(op, payload = {}) {
+      if (PREVIEW) return previewAdmin(op, payload);
+      try {
+        // The key travels in the POST body, never in the URL.
+        return await FG.post({ ...payload, action: "admin", key: state.key, op });
+      } catch (err) {
+        if (err.data && err.data.auth === false && !$("#dashboard").hidden) {
+          signOut("Your admin key is no longer accepted. Please sign in again.");
+        }
+        throw err;
+      }
+    }
+
+    /* ---------- Sign in / out ---------- */
+
+    const loginForm = $("#login-form");
+    const loginStatus = $("#login-status");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const key = $("#admin-key").value.trim();
+      if (!key) {
+        FG.setStatus(loginStatus, "Enter the admin key.", "error");
+        return;
+      }
+      const button = loginForm.querySelector("button");
+      button.disabled = true;
+      button.textContent = "Checking…";
+      FG.setStatus(loginStatus, "", "info");
+      try {
+        await unlock(key);
+      } catch (err) {
+        FG.setStatus(loginStatus, err.data && err.data.auth === false ? "That key isn't right. Check it and try again." : err.message, "error");
+        $("#admin-key").select();
+      } finally {
+        button.disabled = false;
+        button.textContent = "Unlock dashboard";
+      }
+    });
+
+    async function unlock(key) {
+      state.key = key;
+      try {
+        const res = await adminCall("ping");
+        state.quota = res.quota;
+      } catch (err) {
+        state.key = "";
+        sessionStorage.removeItem(KEY_STORE);
+        throw err;
+      }
+      try { sessionStorage.setItem(KEY_STORE, key); } catch (err) { /* storage blocked; stay signed in for this page */ }
+      $("#admin-key").value = "";
+      $("#login-view").hidden = true;
+      $("#dashboard").hidden = false;
+      $("#sign-out").hidden = false;
+      $("#dash-heading").focus();
+      FG.setStatus($("#dir-status"), "Loading the directory…", "info");
+      const results = await Promise.allSettled([loadAlumni(), loadContent()]);
+      const failed = results.find((r) => r.status === "rejected");
+      FG.setStatus($("#dir-status"), failed ? `Couldn't load everything: ${failed.reason.message}` : "", failed ? "error" : "info");
+    }
+
+    function signOut(message) {
+      try { sessionStorage.removeItem(KEY_STORE); } catch (err) { /* ignore */ }
+      state.key = "";
+      state.alumni = [];
+      state.content = { updates: [], photos: [], newsletters: [] };
+      $("#dir-body").innerHTML = "";
+      $("#dashboard").hidden = true;
+      $("#sign-out").hidden = true;
+      $("#login-view").hidden = false;
+      FG.setStatus(loginStatus, message || "", message ? "error" : "info");
+      $("#admin-key").focus();
+    }
+
+    $("#sign-out").addEventListener("click", () => signOut());
+
+    /* ---------- Tabs ---------- */
+
+    const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+    function selectTab(tab, focus) {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      });
+      if (focus) tab.focus();
+      if (tab.id === "tab-email") renderRecipients();
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => selectTab(tab));
+      tab.addEventListener("keydown", (e) => {
+        const moves = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+        if (!(e.key in moves)) return;
+        e.preventDefault();
+        selectTab(tabs[(moves[e.key] + tabs.length) % tabs.length], true);
+      });
+    });
+
+    /* ---------- Directory ---------- */
+
+    const isYes = (v) => /^(yes|true|y|1)$/i.test(String(v == null ? "" : v).trim());
+    const yearOf = (a) => parseInt(a.gradYear, 10);
+
+    async function loadAlumni() {
+      const res = await adminCall("alumni");
+      state.alumni = res.alumni || [];
+      renderStats();
+      renderDirectory();
+    }
+
+    function filteredAlumni() {
+      const terms = $("#dir-search").value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      const from = parseInt($("#dir-from").value, 10);
+      const to = parseInt($("#dir-to").value, 10);
+      const networkingOnly = $("#dir-net").checked;
+      return state.alumni.filter((a) => {
+        if (networkingOnly && !isYes(a.networking)) return false;
+        if (from && !(yearOf(a) >= from)) return false;
+        if (to && !(yearOf(a) <= to)) return false;
+        if (terms.length) {
+          const haystack = [a.name, a.employer, a.position, a.location, a.email].join(" ").toLowerCase();
+          if (!terms.every((t) => haystack.includes(t))) return false;
+        }
+        return true;
+      });
+    }
+
+    function sortAlumni(list) {
+      const { key, dir } = state.sort;
+      const sign = dir === "asc" ? 1 : -1;
+      const value = (a) => {
+        if (key === "gradYear") return yearOf(a) || 0;
+        if (key === "networking") return isYes(a.networking) ? 1 : 0;
+        return String(a[key] || "").toLowerCase();
+      };
+      return list.slice().sort((a, b) => {
+        const va = value(a);
+        const vb = value(b);
+        // Empty text sorts last either way.
+        if (va === "" && vb !== "") return 1;
+        if (vb === "" && va !== "") return -1;
+        if (va < vb) return -sign;
+        if (va > vb) return sign;
+        return String(a.name).localeCompare(String(b.name));
+      });
+    }
+
+    function renderStats() {
+      const all = state.alumni;
+      const networking = all.filter((a) => isYes(a.networking)).length;
+      const years = [...new Set(all.map(yearOf).filter(Boolean))].sort((a, b) => a - b);
+      const newest = all.slice().sort((a, b) => String(b.submitted).localeCompare(String(a.submitted)))[0];
+      $("#stat-total").textContent = all.length;
+      $("#stat-net").textContent = networking;
+      $("#stat-net-sub").textContent = all.length ? `${Math.round((networking / all.length) * 100)}% of alumni` : "";
+      $("#stat-years").textContent = years.length;
+      $("#stat-years-sub").textContent = years.length > 1 ? `${years[0]}–${years[years.length - 1]}` : years.length ? String(years[0]) : "";
+      $("#stat-newest").textContent = newest ? newest.name : "–";
+      $("#stat-newest-sub").textContent = newest
+        ? [newest.gradYear && `Class of ${newest.gradYear}`, FG.formatDate(newest.submitted, "short")].filter(Boolean).join(" · ")
+        : "";
+    }
+
+    function rowHtml(a) {
+      const tel = String(a.phone || "").replace(/[^\d+]/g, "");
+      const joined = FG.formatDate(a.submitted, "short");
+      const updated = a.updated && String(a.updated).slice(0, 10) !== String(a.submitted).slice(0, 10)
+        ? `<br><span class="muted small">Updated ${esc(FG.formatDate(a.updated, "short"))}</span>` : "";
+      const work = [a.position && esc(a.position), a.employer && `<span class="muted">${esc(a.employer)}</span>`].filter(Boolean).join("<br>");
+      return `<tr>
+        <td data-label="Name" class="cell-name"><strong>${esc(a.name)}</strong></td>
+        <td data-label="Class">${esc(a.gradYear)}</td>
+        <td data-label="Location">${esc(a.location)}</td>
+        <td data-label="Work"><div>${work || '<span class="muted">–</span>'}</div></td>
+        <td data-label="Phone" class="cell-nowrap">${a.phone ? `<a href="tel:${esc(tel)}">${esc(a.phone)}</a>` : ""}</td>
+        <td data-label="Email" class="cell-email">${a.email ? `<a href="mailto:${esc(a.email)}">${esc(a.email)}</a>` : ""}</td>
+        <td data-label="Networking">${isYes(a.networking) ? '<span class="pill pill-yes">Yes</span>' : '<span class="pill pill-no">No</span>'}</td>
+        <td data-label="Joined" class="cell-nowrap"><div>${esc(joined)}${updated}</div></td>
+        <td class="cell-actions"><button type="button" class="btn btn-ghost btn-small btn-delete" data-delete-alumni="${esc(a.id)}">Delete<span class="sr-only"> ${esc(a.name)}</span></button></td>
+      </tr>`;
+    }
+
+    function renderDirectory() {
+      const list = sortAlumni(filteredAlumni());
+      $("#dir-body").innerHTML = list.map(rowHtml).join("");
+      $("#dir-table").hidden = list.length === 0;
+      const empty = $("#dir-empty");
+      empty.hidden = list.length > 0;
+      empty.textContent = state.alumni.length
+        ? "No alumni match these filters."
+        : "No one has signed up yet. Share the Join page link with brothers.";
+      $("#dir-count").textContent = state.alumni.length
+        ? (list.length === state.alumni.length ? `${list.length} alumni` : `Showing ${list.length} of ${state.alumni.length} alumni`)
+        : "";
+      document.querySelectorAll("#dir-table th[data-sort]").forEach((th) => {
+        const active = th.dataset.sort === state.sort.key;
+        th.setAttribute("aria-sort", active ? (state.sort.dir === "asc" ? "ascending" : "descending") : "none");
+      });
+      const sortValue = `${state.sort.key}:${state.sort.dir}`;
+      if ([...$("#dir-sort").options].some((o) => o.value === sortValue)) $("#dir-sort").value = sortValue;
+      renderRecipients();
+    }
+
+    ["#dir-search", "#dir-from", "#dir-to", "#dir-net"].forEach((sel) => $(sel).addEventListener("input", renderDirectory));
+
+    $("#dir-clear").addEventListener("click", () => {
+      $("#dir-search").value = "";
+      $("#dir-from").value = "";
+      $("#dir-to").value = "";
+      $("#dir-net").checked = false;
+      renderDirectory();
+    });
+
+    $("#dir-table thead").addEventListener("click", (e) => {
+      const th = e.target.closest("th[data-sort]");
+      if (!th || !e.target.closest("button")) return;
+      const key = th.dataset.sort;
+      if (state.sort.key === key) state.sort.dir = state.sort.dir === "asc" ? "desc" : "asc";
+      else state.sort = { key, dir: key === "submitted" || key === "networking" ? "desc" : "asc" };
+      renderDirectory();
+    });
+
+    // Phones show cards instead of the table, so sorting uses this select there.
+    $("#dir-sort").addEventListener("change", (e) => {
+      const [key, dir] = e.target.value.split(":");
+      state.sort = { key, dir };
+      renderDirectory();
+    });
+
+    $("#dir-body").addEventListener("click", async (e) => {
+      const button = e.target.closest("[data-delete-alumni]");
+      if (!button) return;
+      const person = state.alumni.find((a) => a.id === button.dataset.deleteAlumni);
+      if (!person) return;
+      const ok = await FG.confirmDialog({
+        title: "Delete this entry?",
+        message: `${person.name} (${person.email}) will be removed from the alumni directory. This can't be undone.`,
+        confirmLabel: "Delete",
+        danger: true,
+      });
+      if (!ok) return;
+      const status = $("#dir-status");
+      try {
+        await adminCall("delete", { type: "alumni", id: person.id });
+        state.alumni = state.alumni.filter((a) => a.id !== person.id);
+        renderStats();
+        renderDirectory();
+        FG.setStatus(status, `Deleted ${person.name}.`, "success");
+      } catch (err) {
+        FG.setStatus(status, err.message, "error");
+      }
+    });
+
+    $("#dir-refresh").addEventListener("click", async (e) => {
+      const button = e.currentTarget;
+      button.disabled = true;
+      try {
+        await loadAlumni();
+        FG.setStatus($("#dir-status"), "Directory refreshed.", "success");
+      } catch (err) {
+        FG.setStatus($("#dir-status"), err.message, "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    const CSV_COLUMNS = [
+      ["Name", "name"], ["Grad Year", "gradYear"], ["Location", "location"], ["Employer", "employer"],
+      ["Position", "position"], ["Phone", "phone"], ["Email", "email"], ["Open to Networking", "networking"],
+      ["Submitted", "submitted"], ["Updated", "updated"],
+    ];
+
+    function csvCell(value, key) {
+      let s = value == null ? "" : String(value);
+      if ((key === "submitted" || key === "updated") && s) s = new Date(s).toLocaleString("en-US");
+      // Stop spreadsheet apps from running values as formulas.
+      if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+      return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    }
+
+    $("#dir-export").addEventListener("click", () => {
+      const list = sortAlumni(filteredAlumni());
+      if (!list.length) {
+        FG.setStatus($("#dir-status"), "No alumni match the current filter, so there's nothing to export.", "warn");
+        return;
+      }
+      const csv = [CSV_COLUMNS.map((c) => c[0]).join(",")]
+        .concat(list.map((a) => CSV_COLUMNS.map(([, key]) => csvCell(a[key], key)).join(",")))
+        .join("\r\n");
+      FG.downloadText(`tau-alumni-${FG.todayISO()}.csv`, "﻿" + csv, "text/csv;charset=utf-8");
+      FG.setStatus($("#dir-status"), `Exported ${list.length} ${list.length === 1 ? "entry" : "entries"} to CSV.`, "success");
+    });
+
+    $("#dir-copy").addEventListener("click", async () => {
+      const emails = uniqueEmails(sortAlumni(filteredAlumni()));
+      const status = $("#dir-status");
+      if (!emails.length) {
+        FG.setStatus(status, "No email addresses match the current filter.", "warn");
+        return;
+      }
+      const ok = await FG.copyText(emails.join(", "));
+      FG.setStatus(status, ok ? `Copied ${emails.length} email address${emails.length === 1 ? "" : "es"}. Paste them into BCC.` : "Couldn't copy to the clipboard in this browser.", ok ? "success" : "error");
+    });
+
+    function uniqueEmails(list) {
+      const seen = new Set();
+      const out = [];
+      list.forEach((a) => {
+        const email = String(a.email || "").trim();
+        const k = email.toLowerCase();
+        if (FG.EMAIL_RE.test(email) && !seen.has(k)) {
+          seen.add(k);
+          out.push(email);
+        }
+      });
+      return out;
+    }
+
+    /* ---------- Email ---------- */
+
+    const recipientMode = () => (document.querySelector('input[name="rcpt"]:checked') || {}).value || "all";
+    const quotaNeeded = (n) => n + Math.ceil(n / BATCH_SIZE);
+
+    function recipientList() {
+      const mode = recipientMode();
+      let list = state.alumni;
+      if (mode === "networking") list = list.filter((a) => isYes(a.networking));
+      else if (mode === "range") {
+        const from = parseInt($("#rcpt-from").value, 10);
+        const to = parseInt($("#rcpt-to").value, 10);
+        list = list.filter((a) => (!from || yearOf(a) >= from) && (!to || yearOf(a) <= to));
+      } else if (mode === "filter") list = filteredAlumni();
+      return uniqueEmails(list);
+    }
+
+    function renderRecipients() {
+      $("#rcpt-range").hidden = recipientMode() !== "range";
+      const filtered = filteredAlumni().length;
+      $("#rcpt-filter-desc").textContent = filtered === state.alumni.length ? "(no filter set: everyone)" : `(${filtered} shown in the Directory tab)`;
+
+      const n = recipientList().length;
+      const needed = quotaNeeded(n);
+      $("#rcpt-count").textContent = n;
+      $("#rcpt-noun").textContent = n === 1 ? "recipient" : "recipients";
+
+      const q = state.quota;
+      $("#quota-line").textContent = q == null ? "" : `Gmail quota left today: ${q} recipient${q === 1 ? "" : "s"}.${n ? ` This send uses ${needed}.` : ""}`;
+
+      const over = q != null && n > 0 && needed > q;
+      const warning = $("#quota-warning");
+      warning.hidden = !over;
+      if (over) {
+        warning.innerHTML = `<strong>This is over today's sending limit.</strong> Free Gmail accounts can email about 100 recipients a day. This send needs ${needed} (${n} brothers, plus one copy to the chapter account per batch of 50), and ${q} remain today.
+          Choose a smaller group, send the rest tomorrow, or click <strong>Copy addresses</strong> and send from your own email with the addresses in BCC.`;
+      }
+      $("#email-send").disabled = n === 0 || over;
+    }
+
+    $("#email-form").addEventListener("input", (e) => {
+      if (e.target.name === "rcpt" || e.target.id === "rcpt-from" || e.target.id === "rcpt-to") renderRecipients();
+    });
+
+    $("#email-copy").addEventListener("click", async () => {
+      const list = recipientList();
+      const status = $("#email-status");
+      if (!list.length) {
+        FG.setStatus(status, "There are no recipients for this selection.", "warn");
+        return;
+      }
+      const ok = await FG.copyText(list.join(", "));
+      FG.setStatus(status, ok ? `Copied ${list.length} address${list.length === 1 ? "" : "es"}. Paste them into BCC so brothers don't see each other's emails.` : "Couldn't copy to the clipboard in this browser.", ok ? "success" : "error");
+    });
+
+    $("#email-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const status = $("#email-status");
+      const subject = $("#email-subject").value.trim();
+      const body = $("#email-body").value.trim();
+      const replyTo = $("#email-reply").value.trim();
+      const recipients = recipientList();
+      if (!recipients.length) return FG.setStatus(status, "There are no recipients for this selection.", "error");
+      if (!subject || !body) return FG.setStatus(status, "Add a subject and a message.", "error");
+      if (replyTo && !FG.EMAIL_RE.test(replyTo)) return FG.setStatus(status, "The reply-to address isn't valid.", "error");
+
+      const n = recipients.length;
+      const batches = Math.ceil(n / BATCH_SIZE);
+      const ok = await FG.confirmDialog({
+        title: "Send this email?",
+        message: `“${subject}” will go to ${n} brother${n === 1 ? "" : "s"} by BCC${batches > 1 ? `, in ${batches} batches` : ""}. This can't be undone.`,
+        confirmLabel: `Send to ${n}`,
+      });
+      if (!ok) return;
+
+      const button = $("#email-send");
+      button.disabled = true;
+      button.textContent = "Sending…";
+      FG.setStatus(status, "Sending… keep this tab open.", "info");
+      try {
+        const res = await adminCall("email", { subject, body, replyTo, recipients });
+        state.quota = res.quota;
+        FG.setStatus(status, res.preview
+          ? `Preview mode: no email was sent. A real send would have gone to ${res.sent} brother${res.sent === 1 ? "" : "s"}.`
+          : `Sent to ${res.sent} brother${res.sent === 1 ? "" : "s"}. A copy went to the chapter account.`, "success");
+        $("#email-subject").value = "";
+        $("#email-body").value = "";
+      } catch (err) {
+        if (err.data && typeof err.data.quota === "number") state.quota = err.data.quota;
+        FG.setStatus(status, err.message, "error");
+      } finally {
+        button.textContent = "Send email";
+        renderRecipients();
+      }
+    });
+
+    /* ---------- Content ---------- */
+
+    async function loadContent() {
+      const res = await adminCall("content");
+      state.content = { updates: res.updates || [], photos: res.photos || [], newsletters: res.newsletters || [] };
+      renderContentLists();
+    }
+
+    function itemHtml(type, item, title, meta, thumbUrl, link) {
+      const src = FG.imageUrl(thumbUrl, 200);
+      return `<li class="item">
+        ${src ? `<img class="item-thumb" src="${esc(src)}" alt="" loading="lazy">` : `<span class="item-thumb item-thumb--blank" aria-hidden="true">${type === "newsletter" ? "PDF" : "Aa"}</span>`}
+        <div class="item-main">
+          <p class="item-title">${esc(title)}</p>
+          <p class="item-meta">${esc(meta)}${link || ""}</p>
+        </div>
+        <button type="button" class="btn btn-ghost btn-small btn-delete" data-type="${type}" data-id="${esc(item.id)}">Delete<span class="sr-only"> ${esc(title)}</span></button>
+      </li>`;
+    }
+
+    function renderList(el, countEl, items, empty, render) {
+      el.innerHTML = items.length ? items.map(render).join("") : `<li class="item-empty">${empty}</li>`;
+      countEl.textContent = items.length ? `(${items.length})` : "";
+    }
+
+    function renderContentLists() {
+      const { updates, photos, newsletters } = state.content;
+      renderList($("#list-updates"), $("#count-updates"), FG.sortNewest(updates), "No updates posted yet.",
+        (u) => itemHtml("update", u, u.title, FG.formatDate(u.date, "short"), u.imageUrl));
+      renderList($("#list-photos"), $("#count-photos"), FG.sortNewest(photos), "No photos posted yet.",
+        (p) => itemHtml("photo", p, p.event, [FG.formatDate(p.date, "short"), p.caption].filter(Boolean).join(" · "), p.imageUrl));
+      renderList($("#list-newsletters"), $("#count-newsletters"), FG.sortNewest(newsletters), "No issues posted yet.", (n) => {
+        const url = FG.documentUrl(n.pdfUrl);
+        return itemHtml("newsletter", n, n.issue, FG.formatDate(n.date, "short"), n.coverUrl,
+          url ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">Open PDF</a>` : "");
+      });
+      const events = [...new Set(photos.map((p) => p.event).filter(Boolean))];
+      $("#event-names").innerHTML = events.map((ev) => `<option value="${esc(ev)}"></option>`).join("");
+    }
+
+    $("#panel-content").addEventListener("click", async (e) => {
+      const button = e.target.closest(".btn-delete[data-type]");
+      if (!button) return;
+      const title = button.closest(".item").querySelector(".item-title").textContent;
+      const ok = await FG.confirmDialog({
+        title: "Delete this item?",
+        message: `“${title}” will be removed from the public site, and its uploaded file moved to the Drive trash.`,
+        confirmLabel: "Delete",
+        danger: true,
+      });
+      if (!ok) return;
+      const status = button.closest(".panel-card").querySelector(".form-status");
+      button.disabled = true;
+      try {
+        await adminCall("delete", { type: button.dataset.type, id: button.dataset.id });
+        await loadContent();
+        FG.setStatus(status, `Deleted “${title}”.`, "success");
+      } catch (err) {
+        button.disabled = false;
+        FG.setStatus(status, err.message, "error");
+      }
+    });
+
+    const field = (form, name) => form.elements.namedItem(name);
+    const value = (form, name) => String(field(form, name).value || "").trim();
+
+    async function uploadImage(file, warnings) {
+      const img = await FG.resizeImage(file);
+      const res = await adminCall("upload", img);
+      if (res.warning) warnings.add(res.warning);
+      return res.url;
+    }
+
+    async function uploadPdf(file, warnings) {
+      if (!/\.pdf$/i.test(file.name) && file.type !== "application/pdf") throw new Error(`“${file.name}” isn't a PDF.`);
+      if (file.size > MAX_PDF_BYTES) {
+        throw new Error(`“${file.name}” is ${(file.size / 1048576).toFixed(1)} MB. PDFs must be under 20 MB. Try saving a smaller (“reduced size”) version.`);
+      }
+      const data = await FG.readFileBase64(file);
+      const res = await adminCall("upload", { name: file.name, mimeType: "application/pdf", data });
+      if (res.warning) warnings.add(res.warning);
+      return res.url;
+    }
+
+    /** Runs a form submission with the button disabled and errors shown in the form's status line. */
+    function handleForm(form, busyLabel, task) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const status = form.querySelector(".form-status");
+        const button = form.querySelector('button[type="submit"]');
+        const label = button.textContent;
+        const warnings = new Set();
+        button.disabled = true;
+        button.textContent = busyLabel;
+        try {
+          const message = await task(form, (text) => FG.setStatus(status, text, "info"), warnings);
+          if (message) {
+            FG.setStatus(status, [message, ...warnings].join(" "), warnings.size ? "warn" : "success");
+            form.reset();
+            form.querySelectorAll('input[type="date"]').forEach((input) => { input.value = FG.todayISO(); });
+            await loadContent();
+          }
+        } catch (err) {
+          FG.setStatus(status, err.message, "error");
+        } finally {
+          button.disabled = false;
+          button.textContent = label;
+        }
+      });
+    }
+
+    function requireFields(form, names, message) {
+      const missing = names.find((n) => !value(form, n));
+      if (missing) {
+        field(form, missing).focus();
+        throw new Error(message);
+      }
+    }
+
+    handleForm($("#form-update"), "Posting…", async (form, progress, warnings) => {
+      requireFields(form, ["title", "date", "body"], "Title, date and update text are required.");
+      const file = field(form, "photo").files[0];
+      let imageUrl = "";
+      if (file) {
+        progress("Uploading photo…");
+        imageUrl = await uploadImage(file, warnings);
+      }
+      progress("Posting update…");
+      await adminCall("add", { type: "update", data: { title: value(form, "title"), date: value(form, "date"), body: value(form, "body"), imageUrl } });
+      return "Update posted to the home page.";
+    });
+
+    handleForm($("#form-photos"), "Uploading…", async (form, progress, warnings) => {
+      requireFields(form, ["event", "date"], "Event name and date are required.");
+      const files = [...field(form, "files").files];
+      if (!files.length) {
+        field(form, "files").focus();
+        throw new Error("Choose at least one photo.");
+      }
+      const data = { event: value(form, "event"), date: value(form, "date"), caption: value(form, "caption") };
+      const failed = [];
+      for (let i = 0; i < files.length; i++) {
+        progress(`Uploading photo ${i + 1} of ${files.length}…`);
+        try {
+          const imageUrl = await uploadImage(files[i], warnings);
+          await adminCall("add", { type: "photo", data: { ...data, imageUrl } });
+        } catch (err) {
+          failed.push(`${files[i].name} (${err.message})`);
+        }
+      }
+      const done = files.length - failed.length;
+      if (!done) throw new Error(`No photos were uploaded. ${failed.join("; ")}`);
+      if (failed.length) warnings.add(`These didn't upload: ${failed.join("; ")}.`);
+      return `Uploaded ${done} photo${done === 1 ? "" : "s"} to “${data.event}”.`;
+    });
+
+    handleForm($("#form-issue"), "Posting…", async (form, progress, warnings) => {
+      requireFields(form, ["issue", "date"], "Issue name and date are required.");
+      const pdf = field(form, "pdf").files[0];
+      if (!pdf) {
+        field(form, "pdf").focus();
+        throw new Error("Choose the issue's PDF.");
+      }
+      progress("Uploading PDF…");
+      const pdfUrl = await uploadPdf(pdf, warnings);
+      const cover = field(form, "cover").files[0];
+      let coverUrl = "";
+      if (cover) {
+        progress("Uploading cover…");
+        coverUrl = await uploadImage(cover, warnings);
+      }
+      progress("Posting issue…");
+      await adminCall("add", { type: "newsletter", data: { issue: value(form, "issue"), date: value(form, "date"), summary: value(form, "summary"), pdfUrl, coverUrl } });
+      return "Issue posted to Tau Tales.";
+    });
+
+    document.querySelectorAll('#panel-content input[type="date"]').forEach((input) => { input.value = FG.todayISO(); });
+
+    /* ---------- Start ---------- */
+
+    let savedKey = "";
+    try { savedKey = sessionStorage.getItem(KEY_STORE) || ""; } catch (err) { savedKey = ""; }
+    if (savedKey) {
+      FG.setStatus(loginStatus, "Signing you back in…", "info");
+      unlock(savedKey).catch((err) => {
+        FG.setStatus(loginStatus, err.data && err.data.auth === false ? "Your saved key is no longer valid. Please sign in again." : err.message, "error");
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
