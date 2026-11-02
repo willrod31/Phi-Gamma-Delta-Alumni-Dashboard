@@ -374,7 +374,7 @@
         state.quota = res.quota;
       } catch (err) {
         state.key = "";
-        sessionStorage.removeItem(KEY_STORE);
+        try { sessionStorage.removeItem(KEY_STORE); } catch (e) { /* storage blocked */ }
         throw err;
       }
       try { sessionStorage.setItem(KEY_STORE, key); } catch (err) { /* storage blocked; stay signed in for this page */ }
